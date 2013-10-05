@@ -9,6 +9,41 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
+var config ={
+	dbDatabase:"crossfit",
+	dbHostname:"ds031968.mongolab.com",
+	dbPort:31968,
+	dbUsername:"barry",
+	dbPassword:"joseph"
+};
+
+var mongo = require('mongodb');
+
+var db = new mongo.Db(
+	config.dbDatabase,
+	new mongo.Server(
+		config.dbHostname,
+		config.dbPort,
+		{
+			autoreconnect:true
+		}),
+		{
+			w:0
+		}
+	);
+db.open(function(openErr,openData){
+	if(openData){
+		openData.authenticate(
+			config.dbUsername,
+			config.dbPassword,
+			function(authErr,authData){
+				console.log("Database:connected");
+			});
+	}
+});
+
+var crossfit = db.collection("crossit");
+
 var app = express();
 
 // all environments

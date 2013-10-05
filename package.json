@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "crossfit",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
   "dependencies": {
     "express": "3.4.0",
     "jade": "*",
-    "less-middleware": "*"
+    "less-middleware": "*",
+    "mongodb":"~1.2.8"
   }
 }
