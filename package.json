@@ -9,6 +9,6 @@
     "express": "3.4.0",
     "jade": "*",
     "less-middleware": "*",
-    "mongodb":"~1.2.8"
+    "mongodb":"*"
   }
 }
