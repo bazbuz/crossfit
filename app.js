@@ -19,7 +19,8 @@ var express             = require('express');
 
 var mongo               = require('mongodb');
 
-var routes              = require('./routes');
+var routes              = require('./routes')
+ lessMiddleware = require("less-middleware");
 
 /*
 //  Configuration
@@ -119,7 +120,6 @@ var app = express();
 app.set("port", config.port);
 app.set("views", __dirname + "/views");
 app.set("view engine", "jade");
-
 app.use(express.logger("dev"));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -128,9 +128,20 @@ app.use(express.favicon());
 // app.use(express.cookieSession());
 // app.use(express.compress()); // Compresses responses with gzip/deflate
 // app.use(express.csrf()); // Cross Site Request Forgery Protection
-    
 //  Express Routing
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(lessMiddleware({
+    force: true,
+       dest: __dirname + '/public/css', // should be the URI to your css directory from the location bar in your browser
+        src: __dirname + '/public/less', // or '../less' if the less directory is outside of /public
+        prefix:'/css',
+        compress: true,
+        debug:true
+}));
+//This needs to be after the middleware declaration above
+app.use(express.static(__dirname + "/public"));
+
+//app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 

@@ -1,6 +1,15 @@
 extends layout
 block content
 	h1= title
-	p Welcome to #{title}
 	each item in results
-		div #{item.details}
+		div.row
+			div.col-md-12.col-lg-12
+				div Date: #{item.classDate}
+				div Instructor: #{item.instructor}
+				div #{item.wod.repetitions}
+				h2 WOD
+				div.row
+					div.wod.col-lg-4.col-md-4
+						each exercise in item.wod.exercises
+							div #{exercise.reps} x #{exercise.movement} (#{exercise.resistance.male} / #{exercise.resistance.female}) #{exercise.units}
+					div.col-lg-8.col-md-8
