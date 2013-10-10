@@ -9,7 +9,37 @@ block content
 				div #{item.wod.repetitions}
 				h2 WOD
 				div.row
-					div.wod.col-lg-4.col-md-4
-						each exercise in item.wod.exercises
-							div #{exercise.reps} x #{exercise.movement} (#{exercise.resistance.male} / #{exercise.resistance.female}) #{exercise.units}
-					div.col-lg-8.col-md-8
+					div.wodborder.col-lg-8.col-md-8
+						div.row	
+							div.col-lg-1.col-md-1
+							div.wod.col-lg-10.col-md-10
+								div.row
+									div.col-lg-12.col-md-12
+										div
+											span.title Instructor: 
+											span #{item.instructor}
+								div.row
+									div.col-lg-12.col-md-12
+										span.title Date: 
+										span #{item.classDate}
+								div.row
+									div.col-lg-12.col-md-12
+										div.title WOD
+								div.row
+									div.col-lg-12.col-md-12	
+										each exercise in item.wod.exercises
+											div #{exercise.reps} x #{exercise.movement} (#{exercise.resistance.male} / #{exercise.resistance.female}) #{exercise.units}
+								div.row
+									h3 Results
+									div.col-lg-12.col-md-12	
+										table.table
+											each result in item.results
+												tr
+													td #{result.name}
+													td #{result.result}
+													if(result.rx == true) 
+														td.red RX
+													else
+														td
+							div.col-lg-1.col-md-1
+					div.col-lg-4.col-md-4
