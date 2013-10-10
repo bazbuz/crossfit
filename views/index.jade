@@ -4,10 +4,6 @@ block content
 	each item in results
 		div.row
 			div.col-md-12.col-lg-12
-				div Date: #{item.classDate}
-				div Instructor: #{item.instructor}
-				div #{item.wod.repetitions}
-				h2 WOD
 				div.row
 					div.wodborder.col-lg-8.col-md-8
 						div.row	
@@ -21,10 +17,13 @@ block content
 								div.row
 									div.col-lg-12.col-md-12
 										span.title Date: 
-										span #{item.classDate}
+										span= moment(item.classDate).format("DD MMMM YYYY")
 								div.row
 									div.col-lg-12.col-md-12
 										div.title WOD
+								div.row
+									div.col-lg-12.col-md-12
+										div #{item.wod.repetitions}
 								div.row
 									div.col-lg-12.col-md-12	
 										each exercise in item.wod.exercises
@@ -32,14 +31,20 @@ block content
 								div.row
 									h3 Results
 									div.col-lg-12.col-md-12	
-										table.table
-											each result in item.results
-												tr
-													td #{result.name}
-													td #{result.result}
-													if(result.rx == true) 
-														td.red RX
-													else
-														td
+										div.table-responsive
+											table.table.table-bordered.table-condensed
+												thead
+													th.text-center Name
+													th.text-center Result
+													th.text-center RX?
+												tbody
+													each result in item.results
+														tr
+															td #{result.name}
+															td #{result.result}
+															if(result.rx == true) 
+																td.red RX
+															else
+																td
 							div.col-lg-1.col-md-1
 					div.col-lg-4.col-md-4
