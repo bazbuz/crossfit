@@ -1,0 +1,9 @@
+
+{
+    "port":         5000,
+    "dbHostname":   "ds047948.mongolab.com",
+    "dbPort":       	47948,
+    "dbDatabase":   "wods",
+    "dbUsername":   "barry",
+    "dbPassword":   "joseph"
+}

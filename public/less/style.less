@@ -1,0 +1,62 @@
+@wallblue: #203d8d;
+@white:#8e948a;
+@red:#ff0000;
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.wodborder
+{
+  padding:30px 20px 30px 20px;
+   -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color:@wallblue;
+  -moz-box-shadow: inset 0 0 5px 5px @white;
+  -webkit-box-shadow: inset 0 0 5px 5px @white;
+  box-shadow: 0 0 5px 5px @white, inset 0 0 5px 5px @wallblue;
+}
+.wod {
+  font-family: 'Kite One', sans-serif;
+  padding: 1em;
+  text-align: center;
+  color:@wallblue;
+  background-color:@white;
+  line-height: 2.5em;
+
+  /*A mild border radius */
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  /*box shadow */
+  -moz-box-shadow: 0 0 10px #888;
+  -webkit-box-shadow: 0 0 10px#888;
+    box-shadow: inset 0 0 5px 5px @white;
+    /*This adds the gradient to the box*/
+    background-image: linear-gradient(right bottom, #8E948A 10%, #FFFFFF 78%);
+    background-image: -o-linear-gradient(right bottom, #8E948A 10%, #FFFFFF 78%);
+    background-image: -moz-linear-gradient(right bottom, #8E948A 10%, #FFFFFF 78%);
+    background-image: -webkit-linear-gradient(right bottom, #8E948A 10%, #FFFFFF 78%);
+    background-image: -ms-linear-gradient(right bottom, #8E948A 10%, #FFFFFF 78%);
+
+    background-image: -webkit-gradient(
+      linear,
+      right bottom,
+      left top,
+      color-stop(0.1, @white),
+      color-stop(0.78, #EEEEEE)
+    );
+}
+.wod .title
+{
+  color:@red;
+  font-size:1.5em;
+}
+a {
+  color: #00B7FF;
+}
+.red
+{
+  color:@red;
+}
+
