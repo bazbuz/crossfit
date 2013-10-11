@@ -1,0 +1,78 @@
+extends layout
+block content
+	link(rel='stylesheet', href='/css/datepicker.css')
+	script(src="/js/bootstrap-datepicker.js",type="text/javascript")
+	form(role="form",method="POST")
+		div.form-group
+			label.col-lg-3(for="instructor") Instructor
+			div.col-lg-9
+				input#instructor.form-control(type="text",name="instructor",placeholder="Instructor Name",required)
+		div.form-group
+			label.col-lg-3(for="date") Date
+			div.col-lg-9
+				input#date.form-control(type="text",name="date",data-date-format="dd/mm/yyyy",readonly,required)
+		div.form-group
+			label.col-lg-3(for="wodtitle") WOD Title
+			div.col-lg-9
+				input#wodtitle.form-control(type="text",name="wodtitle",required)
+		div.form-group
+			label.col-lg-3(for="wodstructure") WOD structure
+			div.col-lg-3
+				select#wodstructure.form-control(name="wodstructure")
+					option(value="RFT") RFT
+					option(value="AMRAP") AMRAP
+			label.col-lg-3(for="wodstructure") Time/Reps
+			div.col-lg-3
+				input.form-control#wodstructurecount(type="number",min="1",name="wodstructurecount",required)
+			
+			
+		div.form-group
+			label.col-lg-3 WOD Elements
+			div.col-lg-9
+				table#woditems.table.table-condensed
+					thead
+						th Exercise
+						th Reps
+					tbody
+						-var i = 0;
+						-var rows = 5
+						-for (var i = 0; i<rows;i++) 
+							tr
+								td.col-lg-4.col-md-4 
+									input.form-control.reps(type="text",size="50",id="exercise#{i}",name="exercise")
+								td.col-lg-2.col-md-2 
+									input.form-control.reps(type="number",size="10",id="reps#{i}",name="reps",min="0")
+					tfoot
+						tr
+							td	
+								a.clonerow(href="#") Add Details
+							td
+				table#members.table.table-condensed
+					thead
+						th Member
+						th Result
+					tbody
+						tr
+							td
+								select.form-control(name="memberName")
+									option(value="") [Select Member]
+									each member,index in results
+										option(value="#{member.memberId}") #{member.name.first} #{member.name.last}
+							td
+								input#memberTime.form-control(type="text",name="memberTime",placeholder="Member Time")
+					tfoot
+						tr
+							td
+								a.clonerow(href="#") Add Result
+							td
+		button.btn.btn-primary(type="submit") Add WOD
+		script(type="text/javascript"){
+			$('#date').datepicker();
+			$(".clonerow").click(function(e){
+				e.preventDefault();
+				var $tableBody = $(this).parents("table:first").find("tbody"),
+				$trLast = $tableBody.find("tr:last"),
+				$trNew = $trLast.clone();
+				$trLast.after($trNew);
+			});
+			
