@@ -109,6 +109,7 @@ db.open(function (openErr, openData) {
 //  The whole thing falls over if vehicles is var'd here, which makes me think 
 //  that this does not belong here and is possibly being called out of scope.
 wods = db.collection("wods");
+members = db.collection("members");
 
 
 /*
