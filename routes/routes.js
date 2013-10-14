@@ -3,11 +3,12 @@
 */
 
 module.exports = function (app) {
+    var util = require("util");
     var fs = require('fs');
     var http = require('http');
-
+    //var expressValidator = require('express-validator');
     var url         = require("url");
-     
+    
 /*app.get("*.less", function(req, res) {
     var path = __dirname + req.url;
     console.log(path);
@@ -47,52 +48,87 @@ module.exports = function (app) {
              res.render("addwod", {
                     "results":      items,
                     "title":        "Add WOD",
-                    "breadcrumb" : []
+                    "body":         [],
+                    "breadcrumb" : [],
+                    "errors":[]
                 });
          });
     });
     app.post("/addwod", function (req, res) {
-             //I want to parse the body to get the details. 
-             var instructor = req.body.instructor;
-             console.log(instructor);
-             var date = new Date(req.body.date).getTime();
-             console.log(date);
-             //I need to add the wod details.
-             var exercises = req.body.exercise;
-             var reps = req.body.reps;
-             var wodItems = [];
-            for(var i=0;i<exercises.length;i++)
+
+            req
+                .assert('instructor', 'An instructor is required.')
+                .notEmpty();
+            req
+                .assert('date','A date is required.')
+                .isDate();
+            
+            //  If there aren't any errors and we've got here then email a confirmation and send
+            //  the user to the confirmation message
+            var errors = req.validationErrors(true);
+            
+            if(errors)
             {
-                //I want to add each of the members to this wod
-                if(exercises[i] != "")
+                console.log(errors);
+                res.render("addwod", {
+                    "results":      items,
+                    "title":        "Add WOD",
+                    "body":         req.body,
+                    "breadcrumb" : [],
+                    "errors":errors
+                });
+                res.send('There have been validation errors: ' + util.inspect(errors), 400);
+                return;
+            }
+            else
+            {
+
+                console.log(req.body.date);
+                result = {};
+                result.instructor = req.body.instructor;
+                console.log(req.body.date);
+                result.classDate = new Date(req.body.date).getTime();
+
+                result.wod = {};
+                result.wod.repetitions = req.body.wodstructurecount + " " + req.body.wodstructure;
+                result.wod.exercises = [];
+             //I want to parse the body to get the details. 
+                 //I need to add the wod details.
+                 var exercises = req.body.exercise;
+                 var reps = req.body.reps;
+                 var wodItems = [];
+                for(var i=0;i<exercises.length;i++)
                 {
-                    var result = {
-                        exercise:exercises[i],
-                        reps:reps[i]
+                    //I want to add each of the members to this wod
+                    if(exercises[i] != "")
+                    {
+                        var exerciseItem = {
+                            exercise:exercises[i],
+                            reps:reps[i]
+                        }
+                        result.wod.exercises.push(exerciseItem);
                     }
-                    wodItems.push(result);
-                }
-             }
-             console.log(wodItems);
-             //This is the results part to add member results
-             var memberNames = req.body.memberName;
-             var memberTimes = req.body.memberTime;
-             
-             var memberResults = [];
-             for(var i=0;i<memberNames.length;i++)
-             {
-                //I want to add each of the members to this wod
-                var result = {
-                    memberId:memberNames[i],
-                    result:memberTimes[i]
-                }
-                memberResults.push(result);
-             }
-             console.log(memberResults);
-             //This will be the array of items for the times
-
-             //If succesfull I want to redirect to the index page to show the wod.
-
+                 }
+                 
+                 var memberNames = req.body.memberName;
+                 var memberTimes = req.body.memberTime;
+                 
+                 result.results = []
+                 for(var i=0;i<memberNames.length;i++)
+                 {
+                    //I want to add each of the members to this wod
+                    var memberItem = {
+                        memberId:memberNames[i],
+                        result:memberTimes[i]
+                    }
+                    result.results.push(memberItem);
+                 }
+                 console.log(result);
+                 //I want to see what the result looks like.
+                res.redirect('/');
+             }//This the end of the else for validation
+             //I want to redirect back to the WOD page
+          
     });
      /* This is to get further offers when the  user clicks on the more offers link*/
  

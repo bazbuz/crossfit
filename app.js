@@ -14,6 +14,7 @@ var http                = require('http'),
     path                = require('path');
 
 var express             = require('express');
+var expressValidator       = require('express-validator');
 
 //  TODO:   Switch to using Swig instead of Jade at some point. Not urgent.
 
@@ -21,7 +22,7 @@ var mongo               = require('mongodb');
 
 var routes              = require('./routes'),
  lessMiddleware         = require("less-middleware"),
- moment                 = require('moment');;
+ moment                 = require('moment');
 
 /*
 //  Configuration
@@ -126,12 +127,13 @@ app.use(express.logger("dev"));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.favicon());
-// app.use(express.cookieParser(/* 'some secret string goes here' */));
-// app.use(express.cookieSession());
-// app.use(express.compress()); // Compresses responses with gzip/deflate
-// app.use(express.csrf()); // Cross Site Request Forgery Protection
+app.use(expressValidator());
+//app.use(expressValidator);
+ app.use(express.cookieParser('mySecret'));
+ app.use(express.cookieSession());
+ app.use(express.compress()); // Compresses responses with gzip/deflate
+ //app.use(express.csrf()); // Cross Site Request Forgery Protection
 //  Express Routing
-
 app.use(lessMiddleware({
     force: true,
        dest: __dirname + '/public/css', // should be the URI to your css directory from the location bar in your browser

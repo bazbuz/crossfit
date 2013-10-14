@@ -11,7 +11,8 @@
     "jade": "*",
     "less-middleware": "*",
     "mongodb":"*",
-    "moment":"*"
+    "moment":"*",
+    "express-validator":"*"
 
   }
 }
